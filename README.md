@@ -61,3 +61,6 @@ python3 cli.py
 - `cron_jobs/` - Scheduled sync jobs
 - `cli.py` - Command-line CRUD shell
 - `log_actions.py` - Action logger
+
+### Continuous Integration
+This project uses a [GitHub Actions](https://docs.github.com/en/actions) workflow to run flake8 and black checks on every push and pull request.
