@@ -19,5 +19,41 @@
     <p>Time tracking entries synced via Jibble API Key.</p>
     <h2>Jotform</h2>
     <p>Read submitted form responses and update integrated Sheets/Drive.</p>
+
+    <h2>.env Configuration</h2>
+    <p>The application requires several credentials stored in a <code>.env</code> file. Below are steps to locate them on each platform.</p>
+
+    <h3>QuickBooks</h3>
+    <ol>
+        <li>Log in to the <a href="https://developer.intuit.com/">Intuit Developer portal</a> and create an app.</li>
+        <li>From <em>Keys & OAuth</em> copy the Client ID and Client Secret.</li>
+        <li>Generate a refresh token and note the Company ID for your company.</li>
+    </ol>
+
+    <h3>Google and Gmail</h3>
+    <ol>
+        <li>Open the <a href="https://console.cloud.google.com/">Google Cloud Console</a> and create a project.</li>
+        <li>Enable the Drive, Sheets and Gmail APIs as needed.</li>
+        <li>Under <em>APIs & Services &gt; Credentials</em> create an OAuth client for <code>GOOGLE_CLIENT_ID</code>/<code>GOOGLE_CLIENT_SECRET</code> and an API key for <code>GOOGLE_API_KEY</code>.</li>
+    </ol>
+
+    <h3>Jibble</h3>
+    <ol>
+        <li>Sign in to Jibble and go to <em>Integrations &gt; API</em>.</li>
+        <li>Create a new API token and copy the key for <code>JIBBLE_API_KEY</code>.</li>
+    </ol>
+
+    <h3>Jotform</h3>
+    <ol>
+        <li>Open your Jotform account settings and navigate to <em>API</em>.</li>
+        <li>Generate a key with the required permissions and use it for <code>JOTFORM_API_KEY</code>.</li>
+    </ol>
+
+    <h3>Database</h3>
+    <ol>
+        <li>Retrieve the connection URL from your database provider.</li>
+        <li>Set <code>DATABASE_URL</code> to that address.</li>
+        <li>Optionally provide <code>DATABASE_NAME</code>, <code>DATABASE_USER</code> and <code>DATABASE_PASSWORD</code> in the <code>.env</code> file.</li>
+    </ol>
 </body>
 </html>
