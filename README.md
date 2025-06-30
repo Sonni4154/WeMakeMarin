@@ -2,6 +2,8 @@
 
 ## 🔧 Features
 - Unified web dashboard for QuickBooks, Google, Gmail, Jibble, and Jotform
+- Google Drive browser to view and download files
+- Jotform forms and submission viewer
 - Editable UI forms for Customers, Invoices, and Estimates
 - Logging of all user actions
 - Google OAuth-ready
@@ -29,6 +31,8 @@ Create a `.env` file with credentials:
 ```env
 QB_CLIENT_ID=xxx
 GOOGLE_API_KEY=xxx
+GOOGLE_OAUTH_FILE=credentials.json
+JOTFORM_API_KEY=xxx
 DATABASE_URL=sqlite:///./test.db
 ```
 
@@ -41,7 +45,11 @@ DATABASE_URL=sqlite:///./test.db
 ./start_cron.sh
 ```
 
-### 6. Manual Control
+### 6. Google Drive Login
+Run the application and visit `/login/google` to authorize Drive access. Tokens
+are stored in `drive_token.json`.
+
+### 7. Manual Control
 ```bash
 python3 cli.py
 ```
