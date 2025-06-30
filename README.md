@@ -21,9 +21,9 @@
 
 ### 2. Setup
 ```bash
-# Clone and deploy
-chmod +x deploy.sh
-./deploy.sh
+# Clone and deploy (use `--debug` for verbose mode)
+chmod +x deploy_full.sh
+./deploy_full.sh
 ```
 
 ### 3. Configuration
@@ -45,7 +45,6 @@ DATABASE_URL=sqlite:///./test.db
 ./start_cron.sh
 ```
 
-### 6. Manual Control
 ### 6. Google Drive Login
 Run the application and visit `/login/google` to authorize Drive access. Tokens
 are stored in `drive_token.json`.

@@ -40,4 +40,5 @@ def download_file(file_id: str, out_path: str) -> str:
     while not done:
         status, done = downloader.next_chunk()
     fh.close()
+
     return out_path
