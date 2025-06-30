@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
@@ -18,6 +17,7 @@ def list_sheets():
 def list_drive():
     return {"message": "List of Google Drive files"}
 
+main
     try:
         return list_files()
     except Exception as e:

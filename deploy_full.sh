@@ -81,7 +81,7 @@ retry pip install -r requirements.txt
 
 # Step 6: Generate .env config
 echo "Generating .env from user input..."
-./generate_env.sh
+bash generate_env.sh
 
 # Step 7: Setup systemd
 cat <<EOF > /etc/systemd/system/fastapi_app.service
