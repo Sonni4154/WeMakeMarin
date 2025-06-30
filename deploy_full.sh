@@ -1,5 +1,29 @@
 #!/bin/bash
-set -e
+# Exit on errors, unset variables, and failed pipes
+set -euo pipefail
+
+# Enable debug tracing with --debug
+if [[ "${1:-}" == "--debug" ]]; then
+    set -x
+fi
+
+# Basic error message
+trap 'echo "Error on line $LINENO" >&2' ERR
+
+retry() {
+    local n=0
+    local try=3
+    until [ $n -ge $try ]; do
+        "$@" && break
+        n=$((n+1))
+        echo "Command failed: $* (attempt $n/$try)" >&2
+        sleep 1
+    done
+    if [ $n -ge $try ]; then
+        echo "Command failed after $try attempts: $*" >&2
+        exit 1
+    fi
+}
 
 echo "🛠️ FastAPI App: Full Deployment Script for Debian 12 (Enhanced)"
 
@@ -10,9 +34,9 @@ read -p "🌍 Domain name for HTTPS (blank to skip HTTPS): " DOMAIN
 read -p "🔐 Use PostgreSQL? (yes/no) [yes]: " USE_PG
 USE_PG=${USE_PG:-yes}
 
-# Step 1: Update system and install base packages
-apt update && apt upgrade -y
-apt install -y python3 python3-pip python3-venv build-essential libssl-dev libffi-dev python3-dev \
+# Step 1: Update system and install base packages (with retries)
+retry apt update && retry apt upgrade -y
+retry apt install -y python3 python3-pip python3-venv build-essential libssl-dev libffi-dev python3-dev \
     nginx git curl ufw openssh-server software-properties-common
 
 # Step 2: Create deploy user and SSH keys
@@ -39,7 +63,7 @@ ufw --force enable
 # Step 4: Optional PostgreSQL setup
 if [[ "$USE_PG" == "yes" ]]; then
     echo "Installing PostgreSQL..."
-    apt install -y postgresql postgresql-client libpq-dev
+    retry apt install -y postgresql postgresql-client libpq-dev
     sudo -u postgres psql -c "CREATE USER $USERNAME WITH PASSWORD 'changeme';" || true
     sudo -u postgres psql -c "CREATE DATABASE fastapi_app OWNER $USERNAME;" || true
     echo "✅ PostgreSQL database 'fastapi_app' created with user '$USERNAME'"
@@ -52,8 +76,8 @@ cp -r . $APP_DIR
 cd $APP_DIR
 python3 -m venv venv
 source venv/bin/activate
-pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
+retry pip install --upgrade pip setuptools wheel
+retry pip install -r requirements.txt
 
 # Step 6: Generate .env config
 echo "Generating .env from user input..."
@@ -82,7 +106,7 @@ systemctl restart fastapi_app
 # Step 8: Setup HTTPS with Certbot
 if [ -n "$DOMAIN" ]; then
     echo "🔐 Setting up HTTPS with Certbot..."
-    apt install -y certbot python3-certbot-nginx
+    retry apt install -y certbot python3-certbot-nginx
     certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos -m admin@$DOMAIN || echo "⚠️ Certbot failed, continuing..."
     systemctl reload nginx
 fi
