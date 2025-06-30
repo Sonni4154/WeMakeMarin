@@ -11,3 +11,6 @@ google-auth
 psycopg2-binary
 google-api-python-client
 requests
+jinja2
+python-multipart
+apscheduler

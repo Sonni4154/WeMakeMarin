@@ -10,6 +10,7 @@ SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 TOKEN_FILE = os.path.join(os.path.dirname(__file__), '..', 'drive_token.json')
 CREDENTIALS_FILE = os.environ.get('GOOGLE_OAUTH_FILE', 'credentials.json')
 
+
 def get_credentials():
     if os.path.exists(TOKEN_FILE):
         creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
@@ -20,13 +21,16 @@ def get_credentials():
             token.write(creds.to_json())
     return creds
 
+
 def list_files():
     creds = get_credentials()
     service = build('drive', 'v3', credentials=creds)
-    results = service.files().list(pageSize=100, fields="files(id,name,mimeType,modifiedTime)").execute()
+    results = service.files().list(pageSize=100,
+                                   fields="files(id,name,mimeType,modifiedTime)").execute()
     return results.get('files', [])
 
-def download_file(file_id, out_path):
+
+def download_file(file_id: str, out_path: str) -> str:
     creds = get_credentials()
     service = build('drive', 'v3', credentials=creds)
     request = service.files().get_media(fileId=file_id)
