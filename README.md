@@ -21,9 +21,9 @@
 
 ### 2. Setup
 ```bash
-# Clone and deploy
-chmod +x deploy.sh
-./deploy.sh
+# Clone and deploy (use `--debug` for verbose mode)
+chmod +x deploy_full.sh
+./deploy_full.sh
 ```
 
 ### 3. Configuration

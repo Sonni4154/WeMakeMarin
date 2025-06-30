@@ -1,10 +1,15 @@
+
+from fastapi import APIRouter
 from fastapi import APIRouter, HTTPException
 from services.jotform_service import list_forms, form_submissions, convert_to_google
 
 router = APIRouter()
 
 @router.get("/forms")
-def list_forms_endpoint():
+def list_forms():
+    return {"message": "List of Jotform forms"}
+
+  def list_forms_endpoint():
     try:
         return list_forms()
     except Exception as e:
