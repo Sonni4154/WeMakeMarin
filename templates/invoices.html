@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Invoices</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<h1>Invoices</h1>
+<form action="/ui/invoices" method="post">
+    <input type="number" name="amount" step="0.01" placeholder="Amount" required>
+    <button type="submit">Add Invoice</button>
+</form>
+<ul>
+{% for inv in invoices %}
+    <li>
+        <form action="/ui/invoices/{{ inv.id }}/edit" method="post" style="display:inline;">
+            <input type="number" name="amount" step="0.01" value="{{ inv.amount }}" required>
+            <button type="submit">Update</button>
+        </form>
+        <form action="/ui/invoices/{{ inv.id }}/delete" method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+{% endfor %}
+</ul>
+<a href="/">Back</a>
+</body>
+</html>

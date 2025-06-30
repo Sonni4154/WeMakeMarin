@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head><title>Customers</title></head>
+<body>
+<h1>Customers</h1>
+<form action="/ui/customers" method="post">
+    <input type="text" name="name" placeholder="Customer Name" required>
+    <button type="submit">Add Customer</button>
+</form>
+<ul>
+{% for customer in customers %}
+    <li>
+        <form action="/ui/customers/{{ customer.id }}/edit" method="post" style="display:inline;">
+            <input type="text" name="name" value="{{ customer.name }}" required>
+            <button type="submit">Update</button>
+        </form>
+        <form action="/ui/customers/{{ customer.id }}/delete" method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+{% endfor %}
+</ul>
+<a href="/">Back</a>
+</body>
+</html>

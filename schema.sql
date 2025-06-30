@@ -1,0 +1,13 @@
+-- schema.sql
+CREATE TABLE IF NOT EXISTS customers (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS estimates (
+    id SERIAL PRIMARY KEY,
+    amount NUMERIC NOT NULL
+);
+CREATE TABLE IF NOT EXISTS invoices (
+    id SERIAL PRIMARY KEY,
+    amount NUMERIC NOT NULL
+);
